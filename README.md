@@ -7,7 +7,7 @@ It requires Julia 0.5 or 0.6.
 You can install it from the julia shell:
 
 ```julia
-julia> Pkg.clone("https://github.com/tristanc/SysModels.git")
+julia> Pkg.clone("https://github.com/tricj/SysModels")
 ```
 
 There are some small examples in the test/ directory, and some larger ones,
