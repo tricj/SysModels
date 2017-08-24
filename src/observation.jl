@@ -78,7 +78,7 @@ end
 
 function startevent(loc :: Location, proc :: Process, data :: Dict{AbstractString,Any})
     # create event, move it its location
-    println("startevent")
+    #println("startevent")
     e = Event(loc, proc, data)
     add(proc, e, loc)
     return e

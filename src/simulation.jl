@@ -122,8 +122,7 @@ end
 
 type Simulation
 	time :: Float64
-	process_queue :: PriorityQueue{Process, Float64}
-	#process_queue :: PriorityQueue
+  	process_queue :: DataStructures.PriorityQueue{Process,Float64,Base.Order.ForwardOrdering}
 	model :: Model
 	log_stream :: IOStream
 
@@ -131,8 +130,7 @@ type Simulation
 		sim = new()
 		sim.time = 0.0
 		sim.model = model
-		sim.process_queue = PriorityQueue{Process, Float64, Order.ForwardOrdering}()
-		#sim.process_queue = PriorityQueue()
+		sim.process_queue = DataStructures.PriorityQueue{Process, Float64, Base.Order.ForwardOrdering}()
 
 		for iface in values(model.interfaces)
 			for (key,oloc) in iface.output_locations
@@ -146,10 +144,8 @@ type Simulation
 		end
 
 		model.setup(model)
-
 		return sim
 	end
-
 end
 
 
@@ -159,7 +155,6 @@ function start(sim :: Simulation)
 	for p in model.env_processes
 		start(sim,p)
 	end
-
 	for iface in values(model.interfaces)
 		for iloc in values(iface.input_locations)
 			for p in iloc.env_processes
@@ -176,9 +171,9 @@ function run(sim :: Simulation, until :: Float64)
 
 	while sim.time <= until && length(pq) > 0
 
-		proc, priority = peek(pq)
+		proc, priority = DataStructures.peek(pq)
 		if !proc.scheduled
-			dequeue!(pq)
+			DataStructures.dequeue!(pq)
 
 			@jslog(LOG_MIN, sim, Dict{Any,Any}(
 				"time" => now(sim),
@@ -190,7 +185,7 @@ function run(sim :: Simulation, until :: Float64)
 		end
 		proc_time = pq[proc]
 		if proc_time <= until
-			dequeue!(pq)
+			DataStructures.dequeue!(pq)
 			sim.time = proc_time
 			proc.scheduled = false
 

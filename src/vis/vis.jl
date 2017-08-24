@@ -2,7 +2,7 @@
 
 
 function jslog_init(sim, stream)
-    if jsloglevel > LOG_OFF
+
         sim.log_stream = stream
 
         locs = Any[]
@@ -19,22 +19,19 @@ function jslog_init(sim, stream)
             end
         end
 
-
         write(sim.log_stream, "data = {\n")
         write(sim.log_stream, "\"locations\": ")
         JSON.print(sim.log_stream, locs)
         write(sim.log_stream, ",\n\"links\": ")
         JSON.print(sim.log_stream, links)
         write(sim.log_stream, ",\n\"log\": [\n")
-
-    end
 end
 
+
+
 function jslog_end(sim)
-    if jsloglevel > LOG_OFF
         time = now(sim)
         write(sim.log_stream, "{type:\"end-log\", \"time\": $time} ]\n}\n")
-    end
 end
 
 function jslog(sim, obj)

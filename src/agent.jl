@@ -1,7 +1,6 @@
 
 abstract Agent <: Resource
 
-
 type AgentData
     name :: String
     carrying :: Location
@@ -11,6 +10,8 @@ end
 AgentData(name :: String) = AgentData(name, Location("carrying: $name"), Dict{Any, Any}())
 
 get_data(agent :: Agent) = agent.data
+
+get_location(agent :: Agent) = agent.Location
 
 function toJSON(agent :: Agent)
     return Dict{Any,Any}(

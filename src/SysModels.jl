@@ -4,6 +4,7 @@ module SysModels
 
     import Base.Collections.PriorityQueue, Base.Collections.peek, Base.Collections.dequeue!
     import Base.Order
+    using DataStructures
     using JSON
     using Distributions
 
@@ -26,9 +27,6 @@ module SysModels
     end
 
     abstract Resource
-
-
-
 
     include("vis/vis.jl")
     include("simulation.jl")
